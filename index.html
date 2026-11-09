@@ -1,27 +1,325 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>JingleMoon: Santa Tracker for families</title><meta name="description" content="Follow Santa on a 3D globe, practice the flight any day, chat with Santa, write him a letter and visit Santa's Workshop. No ads, no tracking, no account."><link rel="icon" href="favicon.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="stylesheet" href="style.css"></head><body>
-<header><img src="img/icon.png" alt="" width="44" height="44"><b>JingleMoon</b><nav aria-label="Main"><a href="index.html">Home</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="support.html">Support</a></nav></header>
-<main>
-<section class="hero"><img src="img/hero-globe.webp" alt="A glowing night Earth with Santa's sleigh and a golden route above it" width="720" height="811"><div><h1>Follow Santa on Christmas Eve</h1><p class="lead">JingleMoon is a Christmas app for families. Watch Santa's magical route on a 3D globe, count down the days, chat with Santa, write him a letter and fill Santa's Workshop with keepsakes.</p><p>No ads. No tracking. No account.</p><p class="note">Coming to the App Store soon.</p></div></section>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>JingleMoon: follow Santa's sleigh on Christmas Eve</title>
+<meta name="description" content="A Christmas app for families. Follow Santa's sleigh on a glowing night globe, chat with Santa, write him a letter and visit Santa's Workshop. No ads, no tracking, no account.">
+<link rel="canonical" href="https://jinglemoon.com/">
+<meta name="theme-color" content="#2E040B">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="JingleMoon">
+<meta property="og:url" content="https://jinglemoon.com/">
+<meta property="og:title" content="JingleMoon: follow Santa's sleigh on Christmas Eve">
+<meta property="og:description" content="Follow Santa's sleigh on a glowing night globe, chat with Santa, write him a letter. Made for families: no ads, no tracking, no account.">
+<meta property="og:image" content="https://jinglemoon.com/img/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Santa's sleigh with a golden trail over a night globe with golden Europe, next to the JingleMoon name">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="JingleMoon: follow Santa's sleigh on Christmas Eve">
+<meta name="twitter:description" content="A Christmas app for families. No ads, no tracking, no account.">
+<meta name="twitter:image" content="https://jinglemoon.com/img/og.jpg">
+<link rel="icon" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preload" href="fonts/playfair-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" as="image" href="img/globe-820.webp" imagesrcset="img/globe-520.webp 520w, img/globe-820.webp 820w, img/globe-1100.webp 1100w" imagesizes="(min-width: 64rem) 40rem, 92vw">
+<link rel="stylesheet" href="style.css">
+<script>document.documentElement.className="js"</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"MobileApplication","name":"JingleMoon","operatingSystem":"iOS, iPadOS","applicationCategory":"EntertainmentApplication","description":"A Christmas app for families: follow Santa's simulated sleigh flight on a night globe, chat with Santa, write him a letter and visit Santa's Workshop.","url":"https://jinglemoon.com/","inLanguage":"en","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Person","name":"Darius Cirjan","email":"iosallapps@icloud.com"}}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<canvas id="snow" aria-hidden="true"></canvas>
 
-<h2>What is inside</h2>
-<div class="feature"><div><h3>Home, with the globe and the countdown</h3><p>A turning globe and a countdown to Christmas Eve, with home screen widgets and a Lock Screen countdown. Pick the city Santa should visit; the app never asks for your location.</p></div></div>
-<div class="feature"><div><h3>Practice Flight and Christmas Eve live flight</h3><p>Watch the Practice Flight any day. When the flight window opens, the same journey becomes the live flight, with a close-up of the city on Apple Maps. Santa&#39;s magical route is simulated for fun.</p></div></div>
-<div class="feature"><img src="img/hero-chat.webp" alt="Smiling Santa with two speech bubbles" width="720" height="657" loading="lazy"><div><h3>Chat with Santa, safe and kind</h3><p>Santa answers in friendly, written replies that stay on Christmas. Chat stays on the device. Where Apple&#39;s on-device model is available, it can help write replies in reviewed languages; nothing is sent to a server. Worried messages point to a trusted grown-up.</p></div></div>
-<div class="feature"><img src="img/hero-letter.webp" alt="Santa reading a letter" width="720" height="640" loading="lazy"><div><h3>A letter to Santa and a Nice List certificate</h3><p>Write a letter and get a reply and a Nice List certificate. Delivery is pretend: the letter is saved only on the phone and goes nowhere else. A grown-up can share the certificate.</p></div></div>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="index.html" aria-label="JingleMoon home"><img src="img/icon-128.webp" alt="" width="36" height="36"><span>JingleMoon</span></a>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>Menu</button>
+    <nav class="nav" id="site-nav" aria-label="Main">
+      <a href="#flight">The flight</a>
+      <a href="#workshop">Workshop</a>
+      <a href="#families">Families</a>
+      <a href="support.html">Support</a>
+    </nav>
+  </div>
+</header>
 
-<h2>Santa&#39;s Workshop</h2>
-<p>Optional one-time gifts that keep the magic alive. Each is bought once and kept, with no subscription. Keepsakes are made on the device and only a grown-up can share them.</p>
-<ul class="grid">
-<li><img src="img/golden-seal.webp" alt="Santa's Golden Seal keepsake" width="400" height="400" loading="lazy"><h3>Keepsakes</h3><p>Kind Heart, Letter of Belief and Santa&#39;s Golden Seal, with the child&#39;s name.</p></li>
-<li><img src="img/reindeer-comet.webp" alt="Comet the reindeer" width="400" height="400" loading="lazy"><h3>Adopt a reindeer</h3><p>Pick one of eight reindeer, get its picture and a letter. It leads the sleigh on the globe.</p></li>
-<li><img src="img/santa-gift-bag.webp" alt="Santa with a gift bag" width="480" height="480" loading="lazy"><h3>Santa&#39;s Visit</h3><p>On Christmas Eve and Christmas Day the tracker shows Santa visited your home city.</p></li>
-<li><img src="img/boot-print.webp" alt="Santa's boot print printable" width="400" height="400" loading="lazy"><h3>Magic Kit printables</h3><p>Boot prints, reindeer food label and a door sign with the child&#39;s name.</p></li>
-<li><img src="img/advent-door.webp" alt="An open advent calendar door" width="400" height="400" loading="lazy"><h3>Advent calendar</h3><p>24 doors, one for each day of December.</p></li>
-<li><img src="img/snowglobe-cottage.webp" alt="A snow globe with a cottage" width="400" height="400" loading="lazy"><h3>Snow globes</h3><p>Six globes to shake.</p></li>
-</ul>
-<p>JingleMoon is free to download. A small free allowance is included; an optional upgrade (weekly, monthly or yearly subscription, or a one-time lifetime purchase) unlocks unlimited chats, unlimited letters and every certificate design. See the <a href="terms.html">terms</a> and the <a href="privacy.html">privacy policy</a>.</p>
-<h2>Made for families</h2>
-<p>No ads, no tracking and no accounts. Sharing, reminders, usage statistics and deleting data sit behind a grown-ups check, and every purchase is confirmed in Apple&#39;s own payment sheet. Anonymous usage statistics are off until a parent says yes. Questions? Visit <a href="support.html">Support</a>.</p>
+<main id="main">
+
+<section class="hero ground-velvet" aria-labelledby="hero-title">
+  <div class="sky" aria-hidden="true"></div>
+  <div class="stars" aria-hidden="true"></div>
+  <div class="branch left" data-parallax="0.18" aria-hidden="true"><img src="img/branch-left.webp" alt="" width="260" height="440"></div>
+  <div class="branch right" data-parallax="0.12" aria-hidden="true"><img src="img/branch-right.webp" alt="" width="260" height="440"></div>
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <p class="eyebrow">A Christmas app for families</p>
+      <h1 id="hero-title"><span class="gold">JingleMoon</span></h1>
+      <p class="promise">Follow Santa's sleigh across the night on Christmas Eve, and keep the magic all December.</p>
+    </div>
+    <div class="hero-actions">
+      <div class="cta-row">
+        <a class="btn" href="#flight">See the magic</a>
+        <span class="soon" role="note"><img src="img/icon-128.webp" alt="" width="36" height="36"><span><small>Coming soon to the</small><b>App Store</b></span></span>
+      </div>
+      <div class="card countdown" data-countdown>
+        <p class="countdown-head"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.4 6.9H22l-6 4.5 2.3 7L12 16l-6.3 4.4 2.3-7-6-4.5h7.6z"/></svg><span>Christmas Eve begins in</span></p>
+        <dl class="units" role="timer" aria-label="Time left until Christmas Eve in your time zone">
+          <div><dt>Days</dt><dd data-u="d">--</dd></div>
+          <div><dt>Hours</dt><dd data-u="h">--</dd></div>
+          <div><dt>Minutes</dt><dd data-u="m">--</dd></div>
+          <div><dt>Seconds</dt><dd data-u="s">--</dd></div>
+        </dl>
+        <p class="countdown-msg" data-msg></p>
+        <p class="countdown-foot">Counted in your own time zone.</p>
+      </div>
+    </div>
+    <div class="stage">
+      <div class="moon" aria-hidden="true"></div>
+      <div class="earth"><div class="halo" aria-hidden="true"></div><img src="img/globe-820.webp" srcset="img/globe-520.webp 520w, img/globe-820.webp 820w, img/globe-1100.webp 1100w" sizes="(min-width: 64rem) 40rem, 92vw" width="1100" height="1100" alt="A night globe with the cities of Europe glowing gold" fetchpriority="high"></div>
+      <img class="sleigh" src="img/sleigh-760.webp" srcset="img/sleigh-420.webp 420w, img/sleigh-760.webp 760w" sizes="(min-width: 64rem) 30rem, 70vw" width="760" height="302" alt="Santa's sleigh and reindeer flying with a golden trail">
+      <img class="santa" src="img/santa-wave-420.webp" srcset="img/santa-wave-240.webp 240w, img/santa-wave-420.webp 420w" sizes="(min-width: 64rem) 15rem, 36vw" width="420" height="706" alt="Santa waving hello">
+      <span class="sparkle" style="left:14%;top:30%" aria-hidden="true"></span>
+      <span class="sparkle" style="left:84%;top:18%;animation-delay:1.1s" aria-hidden="true"></span>
+      <span class="sparkle" style="left:8%;top:70%;animation-delay:2s" aria-hidden="true"></span>
+      <span class="sparkle" style="left:52%;top:6%;animation-delay:.6s" aria-hidden="true"></span>
+    </div>
+  </div>
+</section>
+<div class="garland" aria-hidden="true"><svg viewBox="0 0 1440 60" preserveAspectRatio="none"><defs><linearGradient id="snow-a" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset=".55" stop-color="#eef3fb"/><stop offset="1" stop-color="#c9d6ea"/></linearGradient></defs><path fill="url(#snow-a)" d="M0 30 C90 8 170 26 250 20 S420 2 520 18 S700 34 790 16 S960 0 1060 18 S1240 34 1330 14 S1420 18 1440 22 V60 H0Z"/></svg></div>
+
+<section class="chapter ground-pine flight" id="flight" aria-labelledby="flight-title">
+  <div class="wrap chapter-grid">
+    <div class="art-frame card reveal">
+      <img class="ob" src="img/ob-globe-480.webp" srcset="img/ob-globe-480.webp 480w, img/ob-globe-851.webp 851w" sizes="(min-width: 48rem) 21rem, 86vw" width="851" height="1300" alt="Santa's sleigh racing over the night globe under a full moon" loading="lazy">
+    </div>
+    <div class="reveal">
+      <p class="eyebrow"><span class="numeral">I.</span> The flight</p>
+      <h2 id="flight-title">Follow Santa's <em class="gold">sleigh</em></h2>
+      <p class="lead">Watch Santa's journey on a 3D night globe, with a golden trail behind the sleigh.</p>
+      <ul class="ticks">
+        <li><b>Practice Flight, any day.</b> Watch the whole journey whenever you like, all December.</li>
+        <li><b>Live on Christmas Eve.</b> When the flight window opens, the same journey becomes the live flight, with a close-up of your city on Apple Maps.</li>
+        <li><b>Your city, no location needed.</b> Pick the city Santa should visit; the app never asks where you are.</li>
+        <li><b>Countdown everywhere.</b> Home Screen widgets and a live Lock Screen countdown.</li>
+      </ul>
+      <p class="note">Santa's magical route is simulated for fun.</p>
+    </div>
+  </div>
+</section>
+
+<div class="seam" aria-hidden="true"><img src="img/ornament-600.webp" srcset="img/ornament-300.webp 300w, img/ornament-600.webp 600w" sizes="20rem" width="600" height="123" alt="" loading="lazy"></div>
+
+<section class="chapter ground-velvet chat" id="chat" aria-labelledby="chat-title">
+  <div class="wrap chapter-grid flip">
+    <div class="reveal">
+      <img class="hero-art" src="img/hero-chat-640.webp" srcset="img/hero-chat-360.webp 360w, img/hero-chat-640.webp 640w" sizes="20rem" width="640" height="584" alt="Smiling Santa beside two speech bubbles" loading="lazy">
+      <div class="card chat-demo" aria-label="Example of a chat with Santa">
+        <div class="santa-top"><img src="img/santa-wave-240.webp" alt="" width="240" height="403" loading="lazy"><div><b>Santa</b><small>At the North Pole</small></div></div>
+        <ul class="bubbles">
+          <li class="bubble kid">How do the reindeer fly?</li>
+          <li class="bubble santa">With Christmas magic and lots of practice! They run, they jump, and up they go.</li>
+          <li class="bubble kid">What do reindeer eat?</li>
+          <li class="bubble santa" aria-label="Santa is writing"><span class="typing" aria-hidden="true"><i></i><i></i><i></i></span></li>
+        </ul>
+        <div class="suggest" aria-hidden="true"><span>When do you come?</span><span>Favorite cookies?</span></div>
+      </div>
+    </div>
+    <div class="reveal">
+      <p class="eyebrow"><span class="numeral">II.</span> The chat</p>
+      <h2 id="chat-title">Chat with <em class="gold">Santa</em></h2>
+      <p class="lead">Santa answers in warm, written replies that always stay on Christmas.</p>
+      <ul class="ticks">
+        <li><b>Written for children.</b> Replies are written in advance and kept kind and on topic.</li>
+        <li><b>Stays on the device.</b> Where Apple's on-device model is available, it can help write replies in reviewed languages; nothing is sent to a server.</li>
+        <li><b>Safe by design.</b> The chat never asks for names or contact details, and worried messages point to a trusted grown-up.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="seam" aria-hidden="true"><img src="img/ornament-600.webp" srcset="img/ornament-300.webp 300w, img/ornament-600.webp 600w" sizes="20rem" width="600" height="123" alt="" loading="lazy"></div>
+
+<section class="chapter ground-pine letter" id="letter" aria-labelledby="letter-title">
+  <div class="wrap chapter-grid">
+    <div class="letter-stack reveal">
+      <img class="main" src="img/hero-letter-640.webp" srcset="img/hero-letter-360.webp 360w, img/hero-letter-640.webp 640w" sizes="(min-width: 48rem) 26rem, 86vw" width="640" height="664" alt="A letter to Santa in a red envelope with a wax seal" loading="lazy">
+      <img class="seal" src="img/seal-320.webp" srcset="img/seal-200.webp 200w, img/seal-320.webp 320w" sizes="9rem" width="320" height="404" alt="The golden Nice List seal" loading="lazy">
+    </div>
+    <div class="reveal">
+      <p class="eyebrow"><span class="numeral">III.</span> The letter</p>
+      <h2 id="letter-title">A letter to Santa, and a <em class="gold">Nice List</em> certificate</h2>
+      <p class="lead">Your child writes to Santa on parchment and gets a reply, plus a Nice List certificate with their name.</p>
+      <ul class="ticks">
+        <li><b>A pretend delivery.</b> The letter is saved only on the phone and goes nowhere else.</li>
+        <li><b>Grown-ups share.</b> Only a grown-up can share the certificate, after a quick grown-ups check.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="seam" aria-hidden="true"><img src="img/ornament-600.webp" srcset="img/ornament-300.webp 300w, img/ornament-600.webp 600w" sizes="20rem" width="600" height="123" alt="" loading="lazy"></div>
+
+<section class="chapter ground-velvet workshop" id="workshop" aria-labelledby="workshop-title">
+  <div class="branch left" data-parallax="0.1" aria-hidden="true"><img src="img/branch-left.webp" alt="" width="260" height="440" loading="lazy"></div>
+  <div class="branch right" data-parallax="0.06" aria-hidden="true"><img src="img/branch-right.webp" alt="" width="260" height="440" loading="lazy"></div>
+  <div class="wrap">
+    <div class="section-intro reveal">
+      <p class="eyebrow"><span class="numeral">IV.</span> Santa's Workshop</p>
+      <h2 id="workshop-title">Gifts that keep the <em class="gold">magic</em> alive</h2>
+      <p class="lead">Optional one-time gifts. Each is bought once and kept, with no subscription. Keepsakes are made on the device and only a grown-up can share them.</p>
+    </div>
+
+    <article class="card gift reveal" aria-labelledby="g-keepsakes">
+      <div class="gift-art"><div class="fan two">
+        <img src="img/promise-belief-300.webp" srcset="img/promise-belief-300.webp 300w, img/promise-belief-480.webp 480w" sizes="13rem" width="300" height="450" alt="Letter of Belief keepsake page" loading="lazy">
+        <img src="img/promise-seal-300.webp" srcset="img/promise-seal-300.webp 300w, img/promise-seal-480.webp 480w" sizes="13rem" width="300" height="450" alt="Santa's Golden Seal keepsake page" loading="lazy">
+      </div></div>
+      <div>
+        <span class="tag">Keepsakes</span>
+        <h3 id="g-keepsakes">Santa's Promise, with your child's name</h3>
+        <p>Three keepsakes: the Kind Heart Keepsake for one kind thing your child did this year, the Letter of Belief written to your child by name, and Santa's Golden Seal with his golden wax seal and signature.</p>
+      </div>
+    </article>
+
+    <article class="gift stack reveal" aria-labelledby="g-reindeer" style="padding-inline:0">
+      <div class="section-intro" style="margin-bottom:var(--space-4)">
+        <span class="tag">Adopt a reindeer</span>
+        <h3 id="g-reindeer">Pick one of Santa's eight reindeer</h3>
+        <p>Your child adopts one, gets its picture and a letter from the North Pole, and on Christmas Eve sees it pull the sleigh across the globe.</p>
+      </div>
+      <div class="stable">
+        <ul class="herd">
+          <li><img src="img/reindeer-dasher-180.webp" srcset="img/reindeer-dasher-180.webp 180w, img/reindeer-dasher-300.webp 300w" sizes="(min-width: 48rem) 7.5rem, 22vw" width="180" height="343" alt="" loading="lazy"><span>Dasher</span></li>
+          <li><img src="img/reindeer-dancer-180.webp" srcset="img/reindeer-dancer-180.webp 180w, img/reindeer-dancer-300.webp 300w" sizes="(min-width: 48rem) 7.5rem, 22vw" width="180" height="345" alt="" loading="lazy"><span>Dancer</span></li>
+          <li><img src="img/reindeer-prancer-180.webp" srcset="img/reindeer-prancer-180.webp 180w, img/reindeer-prancer-300.webp 300w" sizes="(min-width: 48rem) 7.5rem, 22vw" width="180" height="337" alt="" loading="lazy"><span>Prancer</span></li>
+          <li><img src="img/reindeer-vixen-180.webp" srcset="img/reindeer-vixen-180.webp 180w, img/reindeer-vixen-300.webp 300w" sizes="(min-width: 48rem) 7.5rem, 22vw" width="180" height="343" alt="" loading="lazy"><span>Vixen</span></li>
+          <li><img src="img/reindeer-comet-180.webp" srcset="img/reindeer-comet-180.webp 180w, img/reindeer-comet-300.webp 300w" sizes="(min-width: 48rem) 7.5rem, 22vw" width="180" height="333" alt="" loading="lazy"><span>Comet</span></li>
+          <li><img src="img/reindeer-cupid-180.webp" srcset="img/reindeer-cupid-180.webp 180w, img/reindeer-cupid-300.webp 300w" sizes="(min-width: 48rem) 7.5rem, 22vw" width="180" height="332" alt="" loading="lazy"><span>Cupid</span></li>
+          <li><img src="img/reindeer-donner-180.webp" srcset="img/reindeer-donner-180.webp 180w, img/reindeer-donner-300.webp 300w" sizes="(min-width: 48rem) 7.5rem, 22vw" width="180" height="335" alt="" loading="lazy"><span>Donner</span></li>
+          <li><img src="img/reindeer-blitzen-180.webp" srcset="img/reindeer-blitzen-180.webp 180w, img/reindeer-blitzen-300.webp 300w" sizes="(min-width: 48rem) 7.5rem, 22vw" width="180" height="336" alt="" loading="lazy"><span>Blitzen</span></li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="card gift flip reveal" aria-labelledby="g-visit">
+      <div class="gift-art"><img src="img/santa-gift-bag-300.webp" srcset="img/santa-gift-bag-300.webp 300w, img/santa-gift-bag-480.webp 480w" sizes="15rem" width="300" height="464" alt="Santa carrying his bag of gifts" loading="lazy" style="width:min(15rem,62%)"></div>
+      <div>
+        <span class="tag">Santa's Visit to Your Home</span>
+        <h3 id="g-visit">Santa stops over your city</h3>
+        <p>On Christmas Eve and Christmas Day the tracker shows that Santa visited your home city, with your child's name and a thank you for the cookies.</p>
+      </div>
+    </article>
+
+    <article class="card gift reveal" aria-labelledby="g-kit">
+      <div class="gift-art"><div class="fan">
+        <img src="img/kit-boot-240.webp" srcset="img/kit-boot-240.webp 240w, img/kit-boot-400.webp 400w" sizes="11rem" width="240" height="360" alt="Santa's boot prints printable" loading="lazy">
+        <img src="img/kit-food-240.webp" srcset="img/kit-food-240.webp 240w, img/kit-food-400.webp 400w" sizes="11rem" width="240" height="269" alt="Reindeer food label printable" loading="lazy">
+        <img src="img/kit-door-240.webp" srcset="img/kit-door-240.webp 240w, img/kit-door-400.webp 400w" sizes="11rem" width="240" height="360" alt="Santa Stop Here door sign printable" loading="lazy">
+      </div></div>
+      <div>
+        <span class="tag">Christmas Eve Magic Kit</span>
+        <h3 id="g-kit">Printables for the big night</h3>
+        <p>Santa's boot prints, a reindeer food label and a Santa Stop Here door sign, all with your child's name, ready to print.</p>
+      </div>
+    </article>
+
+    <div class="pair">
+      <article class="card gift reveal" aria-labelledby="g-advent" style="grid-template-columns:1fr;margin:0">
+        <div>
+          <span class="tag">Advent Magic Calendar</span>
+          <h3 id="g-advent">24 doors, one for each day</h3>
+          <p>Twenty four little doors. Each day of December one opens in the app with a surprise from the North Pole.</p>
+        </div>
+        <div class="advent-board">
+          <ol class="doors" data-doors aria-label="Advent calendar with 24 doors"></ol>
+          <p class="advent-caption" data-advent-caption>Each door opens on its day in December.</p>
+        </div>
+      </article>
+      <article class="card gift reveal" aria-labelledby="g-globes" style="grid-template-columns:1fr;margin:0">
+        <div>
+          <span class="tag">Snow Globes</span>
+          <h3 id="g-globes">Six globes to shake</h3>
+          <p>In the app you shake your phone and the snow swirls. Here, tap a globe.</p>
+        </div>
+        <ul class="globes">
+          <li><button class="globe-btn" type="button" aria-label="Shake the Santa's Cottage snow globe"><img src="img/globe-cottage-200.webp" srcset="img/globe-cottage-200.webp 200w, img/globe-cottage-340.webp 340w" sizes="(min-width: 48rem) 8rem, 28vw" width="200" height="253" alt="" loading="lazy"></button><span>Santa's Cottage</span></li>
+          <li><button class="globe-btn" type="button" aria-label="Shake the Santa snow globe"><img src="img/globe-santa-200.webp" srcset="img/globe-santa-200.webp 200w, img/globe-santa-340.webp 340w" sizes="(min-width: 48rem) 8rem, 28vw" width="200" height="251" alt="" loading="lazy"></button><span>Santa</span></li>
+          <li><button class="globe-btn" type="button" aria-label="Shake the Reindeer snow globe"><img src="img/globe-reindeer-200.webp" srcset="img/globe-reindeer-200.webp 200w, img/globe-reindeer-340.webp 340w" sizes="(min-width: 48rem) 8rem, 28vw" width="200" height="252" alt="" loading="lazy"></button><span>Reindeer</span></li>
+          <li><button class="globe-btn" type="button" aria-label="Shake the Toy Workshop snow globe"><img src="img/globe-workshop-200.webp" srcset="img/globe-workshop-200.webp 200w, img/globe-workshop-340.webp 340w" sizes="(min-width: 48rem) 8rem, 28vw" width="200" height="248" alt="" loading="lazy"></button><span>Toy Workshop</span></li>
+          <li><button class="globe-btn" type="button" aria-label="Shake the Santa's Sleigh snow globe"><img src="img/globe-sleigh-200.webp" srcset="img/globe-sleigh-200.webp 200w, img/globe-sleigh-340.webp 340w" sizes="(min-width: 48rem) 8rem, 28vw" width="200" height="249" alt="" loading="lazy"></button><span>Santa's Sleigh</span></li>
+          <li><button class="globe-btn" type="button" aria-label="Shake the Christmas Tree snow globe"><img src="img/globe-tree-200.webp" srcset="img/globe-tree-200.webp 200w, img/globe-tree-340.webp 340w" sizes="(min-width: 48rem) 8rem, 28vw" width="200" height="249" alt="" loading="lazy"></button><span>Christmas Tree</span></li>
+        </ul>
+      </article>
+    </div>
+
+    <p class="allowance reveal">JingleMoon is free to download. A small free allowance is included; an optional upgrade (weekly, monthly or yearly subscription, or a one-time lifetime purchase) unlocks unlimited chats, unlimited letters and every certificate design. See the <a href="terms.html">terms</a> and the <a href="privacy.html">privacy policy</a>.</p>
+  </div>
+</section>
+
+<div class="seam" aria-hidden="true"><img src="img/ornament-600.webp" srcset="img/ornament-300.webp 300w, img/ornament-600.webp 600w" sizes="20rem" width="600" height="123" alt="" loading="lazy"></div>
+
+<section class="chapter ground-pine families" id="families" aria-labelledby="families-title">
+  <div class="wrap">
+    <div class="section-intro reveal">
+      <p class="eyebrow"><span class="numeral">V.</span> Made for families</p>
+      <h2 id="families-title">Calm, private and <em class="gold">kind</em></h2>
+      <p class="lead">Built for parents and children to enjoy together.</p>
+    </div>
+    <ul class="trust">
+      <li class="card reveal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M4 4l16 16"/></svg><b>No ads</b><span>No adverts anywhere in the app.</span></li>
+      <li class="card reveal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 4.5-3.4 8-8 9-4.6-1-8-4.5-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg><b>No tracking</b><span>No advertising identifier, no tracking across apps or websites. Anonymous statistics only if a parent says yes.</span></li>
+      <li class="card reveal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/><path d="M3 3l18 18"/></svg><b>No account</b><span>No sign up, no email, no password. Names, letters and chats stay on the device.</span></li>
+      <li class="card reveal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 018 0v3"/></svg><b>Grown-ups check</b><span>Sharing, reminders, usage statistics and deleting data sit behind a grown-ups check. Every purchase is confirmed in Apple's own payment sheet.</span></li>
+      <li class="card reveal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z"/></svg><b>45 languages</b><span>The whole app is translated into 45 languages.</span></li>
+      <li class="card reveal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="4" width="12" height="17" rx="2"/><rect x="16" y="8" width="6" height="13" rx="1.5"/><path d="M7.5 18h2"/></svg><b>iPhone and iPad</b><span>Made for both iPhone and iPad.</span></li>
+    </ul>
+    <p class="families-note reveal">Questions? Visit <a href="support.html">Support</a> or read the <a href="privacy.html">privacy policy</a>.</p>
+  </div>
+</section>
+
+<div class="seam" aria-hidden="true"><img src="img/ornament-600.webp" srcset="img/ornament-300.webp 300w, img/ornament-600.webp 600w" sizes="20rem" width="600" height="123" alt="" loading="lazy"></div>
+
+<section class="chapter ground-velvet finale" id="countdown" aria-labelledby="finale-title">
+  <div class="stars" aria-hidden="true"></div>
+  <div class="wrap reveal">
+    <img class="bells" src="img/bells-520.webp" srcset="img/bells-300.webp 300w, img/bells-520.webp 520w" sizes="18rem" width="520" height="135" alt="" loading="lazy">
+    <h2 id="finale-title">Christmas Eve is <em class="gold">coming</em></h2>
+    <p class="lead">Count the days with Santa, then watch him fly.</p>
+    <img class="wave" src="img/santa-wave-240.webp" srcset="img/santa-wave-240.webp 240w, img/santa-wave-420.webp 420w" sizes="11rem" width="240" height="403" alt="Santa waving" loading="lazy">
+    <div class="card countdown" data-countdown>
+      <p class="countdown-head"><span>Christmas Eve begins in</span></p>
+      <dl class="units" role="timer" aria-label="Time left until Christmas Eve in your time zone">
+        <div><dt>Days</dt><dd data-u="d">--</dd></div>
+        <div><dt>Hours</dt><dd data-u="h">--</dd></div>
+        <div><dt>Minutes</dt><dd data-u="m">--</dd></div>
+        <div><dt>Seconds</dt><dd data-u="s">--</dd></div>
+      </dl>
+      <p class="countdown-msg" data-msg></p>
+    </div>
+    <div class="cta-row">
+      <span class="soon" role="note"><img src="img/icon-128.webp" alt="" width="36" height="36" loading="lazy"><span><small>Coming soon to the</small><b>App Store</b></span></span>
+    </div>
+  </div>
+</section>
+<div class="garland" aria-hidden="true"><svg viewBox="0 0 1440 60" preserveAspectRatio="none"><defs><linearGradient id="snow-b" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset=".55" stop-color="#eef3fb"/><stop offset="1" stop-color="#c9d6ea"/></linearGradient></defs><path fill="url(#snow-b)" d="M0 30 C90 8 170 26 250 20 S420 2 520 18 S700 34 790 16 S960 0 1060 18 S1240 34 1330 14 S1420 18 1440 22 V60 H0Z"/></svg></div>
+
 </main>
-<footer>Copyright 2026 Darius Cirjan. Apple and App Store are trademarks of Apple Inc.</footer></body></html>
+
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div>
+      <a class="brand" href="index.html"><img src="img/icon-128.webp" alt="" width="36" height="36" loading="lazy"><span>JingleMoon</span></a>
+      <p>A Christmas app for families, for iPhone and iPad.</p>
+    </div>
+    <nav aria-label="Footer"><ul class="footer-links"><li><a href="privacy.html">Privacy</a></li><li><a href="terms.html">Terms</a></li><li><a href="support.html">Support</a></li></ul></nav>
+    <div><p>Contact: <a href="mailto:iosallapps@icloud.com">iosallapps@icloud.com</a></p><p>Copyright 2026 Darius Cirjan. Apple and App Store are trademarks of Apple Inc.</p></div>
+  </div>
+</footer>
+<script src="site.js" defer></script>
+</body>
+</html>
